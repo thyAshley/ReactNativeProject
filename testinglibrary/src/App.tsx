@@ -1,11 +1,12 @@
 import React from "react";
 import "./App.css";
-import { ColorButton } from "./components";
+import { OrderSummary, SummaryForm } from "./pages";
 
 function App() {
   return (
     <div className="App">
-      <ColorButton />
+      <OrderSummary />
+      <SummaryForm />
     </div>
   );
 }

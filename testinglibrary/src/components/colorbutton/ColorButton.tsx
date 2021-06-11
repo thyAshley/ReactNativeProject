@@ -1,7 +1,7 @@
 import React, { Component, PureComponent } from "react";
 
 interface ColorButtonState {
-  color: "red" | "blue";
+  color: "MediumVioletRed" | "MidnightBlue";
   checked: boolean;
 }
 
@@ -10,19 +10,19 @@ class ColorButton extends PureComponent<{}, ColorButtonState> {
     super(props);
 
     this.state = {
-      color: "red",
+      color: "MediumVioletRed",
       checked: false,
     };
   }
 
   onClickHandler = () => {
     this.setState((state) => {
-      if (state.color === "red")
+      if (state.color === "MediumVioletRed")
         return {
-          color: "blue",
+          color: "MidnightBlue",
         };
       return {
-        color: "red",
+        color: "MediumVioletRed",
       };
     });
   };
@@ -43,16 +43,22 @@ class ColorButton extends PureComponent<{}, ColorButtonState> {
     return (
       <>
         <button
-          style={{ background: this.state.color }}
+          style={{ background: this.state.checked ? "grey" : this.state.color }}
           onClick={this.onClickHandler}
           disabled={this.state.checked}
         >
-          Change to {this.state.color === "red" ? "blue" : "red"}
+          Change to{" "}
+          {this.state.color === "MediumVioletRed"
+            ? replaceCamelSpace("midnightBlue")
+            : replaceCamelSpace("MediumVioletRed")}
         </button>
+        <label htmlFor="button-checkbox">Disable button</label>
         <input
+          id="button-checkbox"
           type="checkbox"
           onChange={this.onCheckHandler}
           checked={this.state.checked}
+          aria-checked={this.state.checked}
         />
       </>
     );
@@ -60,3 +66,7 @@ class ColorButton extends PureComponent<{}, ColorButtonState> {
 }
 
 export default ColorButton;
+
+export function replaceCamelSpace(colorName: string) {
+  return colorName.replace(/\B([A-Z])\B/g, " $1");
+}
