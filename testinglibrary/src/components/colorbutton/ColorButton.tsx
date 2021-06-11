@@ -2,6 +2,7 @@ import React, { Component, PureComponent } from "react";
 
 interface ColorButtonState {
   color: "red" | "blue";
+  checked: boolean;
 }
 
 class ColorButton extends PureComponent<{}, ColorButtonState> {
@@ -10,6 +11,7 @@ class ColorButton extends PureComponent<{}, ColorButtonState> {
 
     this.state = {
       color: "red",
+      checked: false,
     };
   }
 
@@ -24,14 +26,35 @@ class ColorButton extends PureComponent<{}, ColorButtonState> {
       };
     });
   };
+
+  onCheckHandler = () => {
+    this.setState((state) => {
+      if (state.checked) {
+        return {
+          checked: false,
+        };
+      }
+      return {
+        checked: true,
+      };
+    });
+  };
   render() {
     return (
-      <button
-        style={{ background: this.state.color }}
-        onClick={this.onClickHandler}
-      >
-        Change to {this.state.color === "red" ? "blue" : "red"}
-      </button>
+      <>
+        <button
+          style={{ background: this.state.color }}
+          onClick={this.onClickHandler}
+          disabled={this.state.checked}
+        >
+          Change to {this.state.color === "red" ? "blue" : "red"}
+        </button>
+        <input
+          type="checkbox"
+          onChange={this.onCheckHandler}
+          checked={this.state.checked}
+        />
+      </>
     );
   }
 }

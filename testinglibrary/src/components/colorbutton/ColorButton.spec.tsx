@@ -22,4 +22,19 @@ describe("Test ColorButton", () => {
     });
     expect(button.textContent).toBe("Change to red");
   });
+
+  it("should render an enabled button and unchecked checkbox", () => {
+    const button = screen.getByRole("button", { name: /change to blue/i });
+    expect(button).toBeEnabled();
+    const checkbox = screen.getByRole("checkbox");
+    expect(checkbox).not.toBeChecked();
+  });
+
+  it("should disable the button when the checkbox is checked", () => {
+    const button = screen.getByRole("button", { name: /change to blue/i });
+    const checkbox = screen.getByRole("checkbox");
+    fireEvent.click(checkbox);
+    expect(button).toBeDisabled();
+    expect(checkbox).toBeChecked();
+  });
 });
